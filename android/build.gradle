@@ -57,8 +57,8 @@ android {
   defaultConfig {
     minSdkVersion getExtOrDefault('minSdkVersion', 16)
     targetSdkVersion getExtOrDefault('targetSdkVersion', 28)
-    //ndkVersion "21.1.6352462"
-    
+    //ndkVersion getExtOrDefault('ndkVersion', "21.4.7075529")
+
     externalNativeBuild {
       cmake {
         cppFlags "-fexceptions", "-frtti", "-std=c++1y", "-DONANDROID"
@@ -81,13 +81,14 @@ android {
   externalNativeBuild {
      cmake {
           path "./src/main/rnmmkv/CMakeLists.txt"
+          //version "3.10.2"
       }
   }
 
   packagingOptions {
     excludes = ["**/libc++_shared.so","**/libjsi.so","**/libreactnativejni.so"]
   }
-  
+
   configurations {
     extractJNI
   }
@@ -96,7 +97,7 @@ android {
 repositories {
   mavenCentral()
   mavenLocal()
-  google()  
+  google()
 
   if (reactNativeDir.exists()) {
     maven {
@@ -112,7 +113,7 @@ repositories {
                     "Ensure you have you installed React Native as a dependency in your project and try again."
     )
   }
- 
+
 }
 
 dependencies {
@@ -126,7 +127,7 @@ dependencies {
 }
 
 task extractJNIFiles {
-  
+
   doLast {
     configurations.extractJNI.files.each {
       def file = it.absoluteFile
@@ -141,7 +142,7 @@ task extractJNIFiles {
 }
 
 task extractJNIFilesForRelease {
-  
+
   doLast {
     configurations.extractJNI.files.each {
       def file = it.absoluteFile

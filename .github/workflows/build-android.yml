@@ -1,0 +1,48 @@
+name: Build Android
+
+on: [pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-18.04
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - version: "0.61.x"
+            folder: "rn61"
+          - version: "0.62.x"
+            folder: "rn62"
+          - version: "0.63.x"
+            folder: "rn63"
+          - version: "0.64.x"
+            folder: "rn64"
+          - version: "0.65.x"
+            folder: "rn65"
+          - version: "0.66.x"
+            folder: "rn66"
+
+    steps:
+      - uses: actions/checkout@v2
+      - run: printenv
+      - run: ls -la /usr/local/lib/android/sdk
+      - run: ls -la /usr/local/lib/android/sdk/cmake
+      - run: ls -la /usr/local/lib/android/sdk/ndk
+      - name: Build Android apk (release & debug)
+        env:
+          RN_VERSION: ${{ matrix.version }}
+          RN_FOLDER: ${{ matrix.folder }}
+          # GITHUB_REPOSITORY=retyui/react-native-mmkv-storage
+          # GITHUB_SHA=23e9deb316eafb585cb8ccc64e51dff97ef8767f
+          # GITHUB_HEAD_REF=fix-android-build
+          # yarn add "$GITHUB_REPOSITORY#$GITHUB_HEAD_REF"
+        run: |
+          echo $RN_VERSION $RN_FOLDER
+          npx react-native init "$RN_FOLDER" --version "$RN_VERSION"
+          cd "$RN_FOLDER"
+          yarn add "$GITHUB_REPOSITORY#$GITHUB_HEAD_REF"
+          cd ..
+          node ./autoLinks.js "$RN_FOLDER"
+          cd "$RN_FOLDER/android"
+          ./gradlew assembleRelease
+          ./gradlew assembleDebug
