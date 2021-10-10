@@ -90,9 +90,9 @@ function pathAndroid_App_BuildGradle(gradleCode) {
 }
 
 pathFile(MainApplicationFile, pathMainApplication);
-fs.writeFileSync(LocalPropertiesFile,`
-cmake.dir=/usr/local/lib/android/sdk/cmake/3.10.2.4988404
-`);
+// fs.writeFileSync(LocalPropertiesFile,`
+// cmake.dir=/usr/local/lib/android/sdk/cmake/3.10.2.4988404
+// `);
 
 // pathFile(AndroidBuildGradleFile, pathAndroidBuildGradle);
 // pathFile(AndroidAppBuildGradleFile, pathAndroid_App_BuildGradle);

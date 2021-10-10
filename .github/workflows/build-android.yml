@@ -40,7 +40,7 @@ jobs:
           echo $RN_VERSION $RN_FOLDER
           npx react-native init "$RN_FOLDER" --version "$RN_VERSION"
           cd "$RN_FOLDER"
-          yarn add "$GITHUB_REPOSITORY#$GITHUB_HEAD_REF"
+          yarn add react-native-mmkv-storage@0.6.0
           cd ..
           node ./autoLinks.js "$RN_FOLDER"
           cd "$RN_FOLDER/android"
