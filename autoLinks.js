@@ -100,12 +100,12 @@ function pathGradleWrapperFile(fileText) {
 
   // RN@0.63.x
   if (fileText.includes("gradle-6.2-all")) {
-    fileText = fileText.replace("gradle-6.2-all", "gradle-6.5-all");
+    fileText = fileText.replace("gradle-6.2-all", "gradle-6.9-all");
   }
 
   // RN@0.62.x
   if (fileText.includes("gradle-6.0.1-all")) {
-    fileText = fileText.replace("gradle-6.0.1-all", "gradle-6.5-all");
+    fileText = fileText.replace("gradle-6.0.1-all", "gradle-6.9-all");
   }
 
   return fileText;
@@ -122,7 +122,7 @@ function defineCmake() {
   );
 }
 
-defineCmake();
+//defineCmake();
 pathFile(GradleWrapperFile, pathGradleWrapperFile);
 pathFile(MainApplicationFile, linkMainApplication);
 pathFile(AndroidBuildGradleFile, linkAndroidBuildGradle);
