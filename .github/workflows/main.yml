@@ -1,6 +1,16 @@
 name: Android
 
-on: [pull_request]
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    paths:
+      - "MMKV/**"
+      - "android/**"
+      - ".github/workflows/**"
+      - "package.json"
+      - "**.js"
 
 jobs:
   build:
@@ -23,22 +33,19 @@ jobs:
             folder: "rn66"
 
     steps:
-    - uses: actions/checkout@v2
-    - run: printenv
-    - name: Build Android apk (release & debug)
-      env:
-        RN_VERSION: ${{ matrix.version }}
-        RN_FOLDER: ${{ matrix.folder }}
-        ANDROID_NDK_HOME: /usr/local/lib/android/sdk/ndk/21.4.7075529
-        # GITHUB_REPOSITORY=retyui/react-native-mmkv-storage
-        # GITHUB_HEAD_REF=fix-android-build
-      run: |
-        echo $RN_VERSION $RN_FOLDER $ANDROID_NDK_HOME
-        npx react-native init "$RN_FOLDER" --version "$RN_VERSION"
-        cd "$RN_FOLDER"
-        yarn add "$GITHUB_REPOSITORY#$GITHUB_HEAD_REF"
-        cd ..
-        node ./autoLinks.js "$RN_FOLDER"
-        cd "$RN_FOLDER/android"
-        ./gradlew assembleRelease
-        ./gradlew assembleDebug
+      - uses: actions/checkout@v2
+      - run: printenv
+      - name: Build Android apk (release & debug)
+        env:
+          RN_VERSION: ${{ matrix.version }}
+          RN_FOLDER: ${{ matrix.folder }}
+        run: |
+          echo $RN_VERSION $RN_FOLDER $ANDROID_NDK_HOME
+          npx react-native init "$RN_FOLDER" --version "$RN_VERSION"
+          cd "$RN_FOLDER"
+          yarn add file:..
+          cd ..
+          node ./autoLinks.js "$RN_FOLDER"
+          cd "$RN_FOLDER/android"
+          ./gradlew assembleRelease
+          ./gradlew assembleDebug
