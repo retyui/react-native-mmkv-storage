@@ -85,7 +85,15 @@ function pathAndroid_App_BuildGradle(gradleCode) {
   if (!gradleCode.includes("rootProject.ext.ndkVersion")) {
     gradleCode = gradleCode.replace(
       "android {",
-      "android {\n    ndkVersion rootProject.ext.ndkVersion"
+      `android {
+    ndkVersion rootProject.ext.ndkVersion
+
+    externalNativeBuild {
+      cmake {
+        version "3.10.0"
+      }
+    }
+`
     );
   }
 
