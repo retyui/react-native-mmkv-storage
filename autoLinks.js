@@ -73,7 +73,7 @@ function linkAndroidBuildGradle(gradleCode) {
   ].forEach((ver) => {
     gradleCode = gradleCode.replace(
       ver,
-      `classpath("com.android.tools.build:gradle:4.1.0")`
+      `classpath("com.android.tools.build:gradle:4.2.0")`
     );
   });
 
