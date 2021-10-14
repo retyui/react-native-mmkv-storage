@@ -44,12 +44,14 @@ find_library(
         log
 )
 
+if (REACT_NATIVE_JNI_LIB)
 find_library(
         REACT_NATIVE_JNI_LIB
         reactnativejni
         PATHS ${LIBRN_DIR}
         NO_CMAKE_FIND_ROOT_PATH
 )
+endif()
 
 set_target_properties(
         ${PACKAGE_NAME} PROPERTIES
